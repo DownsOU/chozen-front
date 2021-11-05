@@ -66,5 +66,8 @@
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8"
+  },
+  "react-native": {
+    "net": "react-native-tcp-socket"
   }
 }
