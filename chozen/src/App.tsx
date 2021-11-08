@@ -24,6 +24,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import CreateRoom2 from "./pages/CreateRoom2";
+import FinalVoteRoom from "./pages/FinalVoteRoom";
 
 const App: React.FC = () => (
   <IonApp>
@@ -38,8 +40,10 @@ const App: React.FC = () => (
         <Route exact path="/createroom">
           <CreateRoom />
         </Route>
+        <Route exact path="/createroom2"><CreateRoom2 /></Route>
         <Route exact path="/joinroom"><JoinRoom /></Route>
         <Route exact path="/votingroom"><VotingRoom /></Route>
+        <Route exact path="/finalvoteroom"><FinalVoteRoom /></Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

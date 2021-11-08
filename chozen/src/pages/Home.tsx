@@ -6,12 +6,12 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonTitle size="large">ChoZen</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-          <IonButton expand="block" href="createroom">
+      <IonContent color="dark" fullscreen>
+          <IonButton color="secondary" expand="block" href="createroom">
               Create Room
           </IonButton>
           <IonButton expand="block" href="joinroom">
