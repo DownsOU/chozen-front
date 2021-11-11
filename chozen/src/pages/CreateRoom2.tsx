@@ -1,6 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
 
 import './Home.css';
+import RoomCreate from "../components/RoomCreate";
+import React from "react";
 
 const CreateRoom2: React.FC = () => {
     return (
@@ -11,12 +13,14 @@ const CreateRoom2: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent color="dark" fullscreen>
-                <p>The room has been created <strong>successfully!</strong></p>
                 <p>Voting Category: <strong>Food Type</strong></p>
-                <p>Room Code: <strong>J3B7M</strong></p>
+                <RoomCreate />
                 <IonButton color="primary" expand="block" href="votingroom">
                     Join Room
                 </IonButton>
+                <div id="creationConfirmation">
+
+                </div>
             </IonContent>
         </IonPage>
     );

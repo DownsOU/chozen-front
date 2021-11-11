@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import './Home.css';
 import React from "react";
+import RoomCreate from "../components/RoomCreate";
 
 const slideOpts = {
     initialSlide: 0,

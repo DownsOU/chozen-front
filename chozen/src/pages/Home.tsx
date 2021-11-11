@@ -1,5 +1,4 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -17,7 +16,6 @@ const Home: React.FC = () => {
           <IonButton expand="block" href="joinroom">
               Join Room
           </IonButton>
-          {/*} <ExploreContainer />*/}
       </IonContent>
     </IonPage>
   );

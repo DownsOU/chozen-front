@@ -22,6 +22,9 @@ const VotingRoom: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent color="dark" fullscreen>
+                <div id="confirm">
+
+                </div>
                 <p>Voting Category: <strong>Food Type</strong></p>
                 <p>Room Code: <strong>J3B7M</strong></p>
                 <IonList>

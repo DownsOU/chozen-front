@@ -1,25 +1,25 @@
 import React, {Component, useState} from 'react';
 import ReactDOM from "react-dom";
-import JoinRoom from "./JoinRoom";
+import RoomJoin from "./RoomJoin";
 
-const CreateRoom: React.FC =() =>{
+const RoomCreate: React.FC = () => {
     var [roomID, setRoomID] = useState("");
     React.useEffect(() => {
-        const ws = new WebSocket("ws://localhost:25565");
+        const ws = new WebSocket("ws://192.168.1.190:25565");
         ws.onopen = function () {
             ws.send("request_create_room");
         }
         ws.onmessage = function(evt) {
             var received_msg = evt.data;
             var received_split = received_msg.split(" ");
-            setRoomID(received_split[1]);
+            setRoomID = (received_split[1]);
         }
     }, []);
 
     return(
-        <div className="CreateRoom">
-            <p>Room Created: {roomID}</p>
+        <div className="RoomCreate">
+            <p>Room Code: <strong>{roomID}</strong></p>
         </div>
     );
 }
-export default CreateRoom;
+export default RoomCreate;

@@ -3,10 +3,8 @@ import {IonAlert} from '@ionic/react';
 import ReactDOM from "react-dom";
 
 
-const JoinRoom = (room: string)=> {
+const RoomJoin = (room: string)=> {
     var confirmationMessage: string;
-    var showConfirmation = false;
-
     var request = "request_join_room "
     request = request.concat(room);
     const ws = new WebSocket("ws://192.168.1.190:25565");
@@ -16,16 +14,18 @@ const JoinRoom = (room: string)=> {
     ws.onmessage = function(evt) {
         if(evt.data === "request_join_room_success") {
             confirmationMessage = "Successfully";
-            showConfirmation = true
+            // @ts-ignore
+            document.getElementById("goToVote").click();
             return(
                 ReactDOM.render(
                     <p>Joined Room {room} {confirmationMessage}</p>,
                     document.getElementById('confirm')
                 )
+
             );
         }
     }
 
 
 }
-export default JoinRoom;
+export default RoomJoin;
