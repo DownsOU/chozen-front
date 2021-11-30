@@ -4,7 +4,7 @@ import './Home.css';
 import RoomCreate from "../components/RoomCreate";
 import React from "react";
 
-const CreateRoom2: React.FC = () => {
+const RoomInfo: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
@@ -15,7 +15,7 @@ const CreateRoom2: React.FC = () => {
             <IonContent color="dark" fullscreen>
                 <p>Voting Category: <strong>Food Type</strong></p>
                 <RoomCreate />
-                <IonButton color="primary" expand="block" href="votingroom">
+                <IonButton color="primary" expand="block" href="addoptions">
                     Join Room
                 </IonButton>
                 <div id="creationConfirmation">
@@ -26,4 +26,4 @@ const CreateRoom2: React.FC = () => {
     );
 };
 
-export default CreateRoom2;
+export default RoomInfo;

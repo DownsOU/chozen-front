@@ -1,41 +1,47 @@
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonButton,
-    IonInput,
-    IonItem,
-    IonList
-} from '@ionic/react';
-import React, {useState} from 'react';
+import { IonSlide, IonicSwiper, IonSlides, IonItemSliding, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
+import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper-bundle.min.css';
+import '@ionic/react/css/ionic-swiper.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore from 'swiper';
 import './Home.css';
+import React from "react";
+import RoomCreate from "../components/RoomCreate";
+
+const slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+};
+
 
 const VotingRoom: React.FC = () => {
-    const [text3, setText] = useState<string>();
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar color="dark">
-                    <IonTitle color="warning" size="large">Choose Selection:</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent color="dark" fullscreen>
-                <div id="confirm">
-
-                </div>
-                <p>Voting Category: <strong>Food Type</strong></p>
-                <p>Room Code: <strong>J3B7M</strong></p>
-                <IonList>
-                    <IonItem>
-                        <IonInput value={text3} placeholder="Enter Vote Option" onIonChange={e => setText(e.detail.value!)} clearInput></IonInput>
-                    </IonItem>
-                </IonList>
-                <IonButton color="success" expand="block" href="finalvoteroom">Submit</IonButton>
-            </IonContent>
-        </IonPage>
-    );
-};
+        <IonHeader>
+            <IonToolbar color="dark">
+                <IonTitle color="warning" size="large">Choose One:</IonTitle>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent color="dark" fullscreen>
+            <IonSlides pager={true} options={slideOpts}>
+                <IonSlide>
+                    <h1>Pizza</h1>
+                </IonSlide>
+                <IonSlide>
+                    <h1>Burger</h1>
+                </IonSlide>
+                <IonSlide>
+                    <h1>Taco</h1>
+                </IonSlide>
+                <IonSlide>
+                    <h1>Pasta</h1>
+                </IonSlide>
+                <IonSlide>
+                    <h1>Steak</h1>
+                </IonSlide>
+            </IonSlides>
+        </IonContent>
+</IonPage>
+    );}
 
 export default VotingRoom;

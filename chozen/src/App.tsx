@@ -4,7 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import CreateRoom from "./pages/CreateRoom";
 import JoinRoom from "./pages/JoinRoom";
-import VotingRoom from "./pages/VotingRoom";
+import AddOptions from "./pages/AddOptions";
 import ResultsPage from "./pages/ResultsPage";
 
 /* Core CSS required for Ionic components to work properly */
@@ -25,8 +25,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import CreateRoom2 from "./pages/CreateRoom2";
-import FinalVoteRoom from "./pages/FinalVoteRoom";
+import RoomInfo from "./pages/RoomInfo";
+import VotingRoom from "./pages/VotingRoom";
 
 const App: React.FC = () => (
   <IonApp>
@@ -41,10 +41,10 @@ const App: React.FC = () => (
         <Route exact path="/createroom">
           <CreateRoom />
         </Route>
-        <Route exact path="/createroom2"><CreateRoom2 /></Route>
+        <Route exact path="/roominfo"><RoomInfo /></Route>
         <Route exact path="/joinroom"><JoinRoom /></Route>
+        <Route exact path="/addoptions"><AddOptions /></Route>
         <Route exact path="/votingroom"><VotingRoom /></Route>
-        <Route exact path="/finalvoteroom"><FinalVoteRoom /></Route>
         <Route exact path="/resultspage"><ResultsPage /></Route>
       </IonRouterOutlet>
     </IonReactRouter>

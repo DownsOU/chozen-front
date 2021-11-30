@@ -17,7 +17,7 @@ const CreateRoom: React.FC = () => {
                         <IonInput value={text1} placeholder="Enter Category" onIonChange={e => setText(e.detail.value!)} clearInput></IonInput>
                     </IonItem>
                 </IonList>
-                <IonButton color="secondary" expand="block" href="createroom2">
+                <IonButton color="secondary" expand="block" href="roominfo">
                     Create Room
             </IonButton>
                 <IonButton color="danger" expand="block" href="home">
