@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import CreateRoom from "./pages/CreateRoom";
 import JoinRoom from "./pages/JoinRoom";
 import VotingRoom from "./pages/VotingRoom";
+import ResultsPage from "./pages/ResultsPage";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -44,6 +45,7 @@ const App: React.FC = () => (
         <Route exact path="/joinroom"><JoinRoom /></Route>
         <Route exact path="/votingroom"><VotingRoom /></Route>
         <Route exact path="/finalvoteroom"><FinalVoteRoom /></Route>
+        <Route exact path="/resultspage"><ResultsPage /></Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

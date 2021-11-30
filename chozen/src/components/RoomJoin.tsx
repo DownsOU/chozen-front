@@ -7,7 +7,7 @@ const RoomJoin = (room: string)=> {
     var confirmationMessage: string;
     var request = "request_join_room "
     request = request.concat(room);
-    const ws = new WebSocket("ws://192.168.1.190:25565");
+    const ws = new WebSocket("ws://localhost:25565");
     ws.onopen = function() {
         ws.send(request);
     };

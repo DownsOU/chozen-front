@@ -5,7 +5,7 @@ import RoomJoin from "./RoomJoin";
 const RoomCreate: React.FC = () => {
     var [roomID, setRoomID] = useState("");
     React.useEffect(() => {
-        const ws = new WebSocket("ws://192.168.1.190:25565");
+        const ws = new WebSocket("ws://localhost:25565");
         ws.onopen = function () {
             ws.send("request_create_room");
         }
