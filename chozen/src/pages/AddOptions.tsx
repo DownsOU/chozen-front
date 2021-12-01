@@ -14,9 +14,7 @@ import './Home.css';
 import Socket from "../components/Socket";
 
 const AddOptions: React.FC = () => {
-    const [text3, setText] = useState<string>();
-    const roomID = Socket.getInstance().getRoomID();
-    alert(roomID)
+    const [option, setOption] = useState("");
     return (
         <IonPage>
             <IonHeader>
@@ -28,13 +26,13 @@ const AddOptions: React.FC = () => {
                 <div id="confirm">
 
                 </div>
-                <p>Room Code: <strong>{roomID}</strong></p>
+                <p>Room Code: <strong>{}</strong></p>
                 <IonList>
                     <IonItem>
-                        <IonInput value={text3} placeholder="Enter Vote Option" onIonChange={e => setText(e.detail.value!)} clearInput></IonInput>
+                        <IonInput value={option} placeholder="Enter Vote Option" onIonChange={e => setOption(e.detail.value!)} clearInput></IonInput>
                     </IonItem>
                 </IonList>
-                <IonButton color="success" expand="block" href="votingroom">Submit</IonButton>
+                <IonButton color="success" expand="block" onClick={() => Socket.getInstance().addOption(option)}href="votingroom">Submit</IonButton>
             </IonContent>
         </IonPage>
     );

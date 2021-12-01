@@ -1,14 +1,11 @@
 import ReactDOM from "react-dom";
-import { Redirect, Router } from 'react-router-dom';
 import React from 'react';
-import {IonButton, IonRedirect} from '@ionic/react';
-import {IonReactRouter} from "@ionic/react-router";
 
 class Socket {
     private static instance: Socket;
     public ws: WebSocket;
     private static ready: boolean;
-    public static roomID: string;
+    private static roomID: string;
     private static options: string;
     private static isHost: boolean;
     private constructor() {
@@ -37,11 +34,9 @@ class Socket {
             Socket.getInstance().joinRoom();
             // @ts-ignore
             document.getElementById("goToRoomInfo").click();
-            if(Socket.roomID) {
-                ReactDOM.render(
-                    <p>Room Code: {Socket.roomID}</p>,
-                    document.getElementById("roomShare"));
-            }
+            ReactDOM.render(
+                <p>Room Code: {Socket.getInstance().getRoomID()}</p>,
+                document.getElementById("roomShare"));
         }
     }
 
