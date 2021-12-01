@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import TCPSocket from 'react-native-tcp-socket';
-import RoomJoin from "../components/RoomJoin";
 import {
     IonContent,
     IonHeader,
@@ -14,6 +12,7 @@ import {
 } from '@ionic/react';
 
 import './Home.css';
+import Socket from "../components/Socket";
 
 const JoinRoom: React.FC = () => {
     const [roomCode, setRoomCode] = useState("");
@@ -25,7 +24,6 @@ const JoinRoom: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent color="dark" fullscreen>
-                <form action="votingroom"><button id="goToVote" ></button></form>
                 <IonList>
                     <IonItem>
                         <IonInput value={roomCode}
@@ -36,8 +34,8 @@ const JoinRoom: React.FC = () => {
                     </IonItem>
                 </IonList>
                 <IonButton expand="block"
-                           onClick={() => RoomJoin(roomCode)}
-                           >Join Room</IonButton>
+                           onClick={() => Socket.getInstance().joinRoom(roomCode)}
+                           href='addOptions'>Join Room</IonButton>
                 <IonButton color="danger" expand="block" href="home">
                     Back
                 </IonButton>

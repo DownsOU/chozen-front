@@ -11,9 +11,12 @@ import {
 } from '@ionic/react';
 import React, {useState} from 'react';
 import './Home.css';
+import Socket from "../components/Socket";
 
 const AddOptions: React.FC = () => {
     const [text3, setText] = useState<string>();
+    const roomID = Socket.getInstance().getRoomID();
+    alert(roomID)
     return (
         <IonPage>
             <IonHeader>
@@ -25,8 +28,7 @@ const AddOptions: React.FC = () => {
                 <div id="confirm">
 
                 </div>
-                <p>Voting Category: <strong>Food Type</strong></p>
-                <p>Room Code: <strong>J3B7M</strong></p>
+                <p>Room Code: <strong>{roomID}</strong></p>
                 <IonList>
                     <IonItem>
                         <IonInput value={text3} placeholder="Enter Vote Option" onIonChange={e => setText(e.detail.value!)} clearInput></IonInput>
