@@ -1,5 +1,7 @@
 import React from 'react';
+import ReactDOM from "react-dom";
 import PageRenderer from "./PageRenderer";
+import JoinRoom from "../pages/JoinRoom";
 
 
 class Socket {
@@ -9,11 +11,14 @@ class Socket {
     private static roomID: string;
     private static options: string;
     private static isHost: boolean;
+    private static winningOption: string;
     private static pr: PageRenderer
+    private static showResults: Worker;
     private constructor() {
         Socket.ws = new WebSocket("ws://localhost:25565");
         Socket.isHost = false;
         Socket.pr = new PageRenderer();
+        Socket.showResults = new Worker('./SkipToResults');
         Socket.ws.onopen = function() {
             Socket.ready = true;
         }
@@ -88,7 +93,7 @@ class Socket {
             await Socket.getInstance().delay(100);
             Socket.getInstance().setOptions();
             await Socket.getInstance().delay(100);
-            Socket.pr.renderVotingRoom();
+            Socket.pr.renderVotingRoomHost();
         }
     }
 
@@ -116,6 +121,17 @@ class Socket {
         }
     }
 
+    public async endVote() {
+        if(Socket.ready) {
+            Socket.ws.send("force_end_vote");
+        }
+        Socket.ws.onmessage = function (evt) {
+            Socket.getInstance().setWinningOption(evt.data.split(" ")[1]);
+            Socket.pr.renderResultsPage();
+            Socket.showResults.postMessage("message");
+        }
+    }
+
     public getRoomID(): string {
         return(Socket.roomID);
     }
@@ -123,11 +139,19 @@ class Socket {
         Socket.roomID = id;
     }
 
+    public getWinningOption(): string {
+        return(Socket.winningOption);
+    }
+    public setWinningOption(opt: string) {
+        Socket.winningOption = opt;
+    }
+
     private delay(milliseconds: number) {
         return new Promise(resolve => {
             setTimeout(resolve, milliseconds);
         });
     }
+
 
 }
 export default Socket;
