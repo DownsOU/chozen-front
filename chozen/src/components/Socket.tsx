@@ -1,7 +1,6 @@
-import ReactDOM from "react-dom";
 import React from 'react';
 import PageRenderer from "./PageRenderer";
-import {resolveAny} from "dns";
+
 
 class Socket {
     private static instance: Socket;
@@ -10,7 +9,6 @@ class Socket {
     private static roomID: string;
     private static options: string;
     private static isHost: boolean;
-    private static voteStarted: boolean;
     private static pr: PageRenderer
     private constructor() {
         Socket.ws = new WebSocket("ws://localhost:25565");
@@ -100,9 +98,19 @@ class Socket {
         Socket.pr.renderVotingRoom();
     }
 
-    public sendVote(option: any) {
+    public sendYesVote(option: string) {
         var request = "input_vote ";
         request = request.concat(option);
+        request = request.concat(" yes");
+        if(Socket.ready) {
+            Socket.ws.send(request);
+        }
+    }
+
+    public sendNoVote(option: string) {
+        var request = "input_vote ";
+        request = request.concat(option);
+        request = request.concat(" no");
         if(Socket.ready) {
             Socket.ws.send(request);
         }
