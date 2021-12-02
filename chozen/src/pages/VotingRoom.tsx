@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import './Home.css';
 import React from "react";
+import Socket from "../components/Socket";
 
 const slideOpts = {
     initialSlide: 0,
@@ -14,31 +15,18 @@ const slideOpts = {
 
 
 const VotingRoom: React.FC = () => {
+    Socket.getInstance().setOptions();
     return (
         <IonPage>
         <IonHeader>
             <IonToolbar color="dark">
-                <IonTitle color="warning" size="large">Choose One:</IonTitle>
+                <IonTitle color="warning" size="large">Vote</IonTitle>
             </IonToolbar>
         </IonHeader>
         <IonContent color="dark" fullscreen>
-            <IonSlides pager={true} options={slideOpts}>
-                <IonSlide>
-                    <h1>Pizza</h1>
-                </IonSlide>
-                <IonSlide>
-                    <h1>Burger</h1>
-                </IonSlide>
-                <IonSlide>
-                    <h1>Taco</h1>
-                </IonSlide>
-                <IonSlide>
-                    <h1>Pasta</h1>
-                </IonSlide>
-                <IonSlide>
-                    <h1>Steak</h1>
-                </IonSlide>
-            </IonSlides>
+            <div id="options">
+
+            </div>
         </IonContent>
 </IonPage>
     );}

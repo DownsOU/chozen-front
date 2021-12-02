@@ -2,22 +2,17 @@ import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonInpu
 import React, {useState} from 'react';
 import './Home.css';
 import Socket from "../components/Socket";
-import PageRenderer from "../components/PageRenderer";
 
-const AddOptions: React.FC = () => {
+const AddOptionsHost: React.FC = () => {
     const [option, setOption] = useState("");
-    const pr = new PageRenderer()
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar color="dark">
-                    <IonTitle color="warning" size="large">Add Option</IonTitle>
+                    <IonTitle color="warning" size="large">Add Options</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent color="dark" fullscreen>
-                <div id="confirm">
-
-                </div>
                 <p>Room Code: <strong>{Socket.getInstance().getRoomID()}</strong></p>
                 <IonList>
                     <IonItem>
@@ -25,10 +20,10 @@ const AddOptions: React.FC = () => {
                     </IonItem>
                 </IonList>
                 <IonButton color="success" expand="block" onClick={() => Socket.getInstance().addOption(option)}>Submit</IonButton>
-                <IonButton color="danger" expand="block" onClick={() => pr.renderVotingRoom()}>Ready To Vote!</IonButton>
+                <IonButton color="danger" expand="block" onClick={() => Socket.getInstance().startVote()}>Ready To Vote!</IonButton>
             </IonContent>
         </IonPage>
     );
 };
 
-export default AddOptions;
+export default AddOptionsHost;

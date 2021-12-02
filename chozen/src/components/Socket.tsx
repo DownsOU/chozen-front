@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import React from 'react';
 import PageRenderer from "./PageRenderer";
+import {resolveAny} from "dns";
 
 class Socket {
     private static instance: Socket;
@@ -8,7 +9,9 @@ class Socket {
     private static ready: boolean;
     private static roomID: string;
     private static options: string;
+    private static optionsArray: string[];
     private static isHost: boolean;
+    private static voteStarted: boolean;
     private static pr: PageRenderer
     private constructor() {
         Socket.ws = new WebSocket("ws://localhost:25565");
@@ -57,7 +60,7 @@ class Socket {
     public closeRoom() {
         if(Socket.ready) {
             Socket.ws.send("close_room");
-            Socket.pr.renderAddOptions();
+            Socket.pr.renderAddOptionsHost();
         }
     }
 
@@ -69,7 +72,7 @@ class Socket {
         }
     }
 
-    public setOptions(){
+    public setOptions() {
         if(Socket.ready) {
             Socket.ws.send("get_options");
         }
@@ -79,6 +82,27 @@ class Socket {
     }
     public getOptions(): string {
         return(Socket.options);
+    }
+
+    public startVote() {
+        if(Socket.ready) {
+            Socket.ws.send("start_vote");
+            Socket.pr.renderVotingRoom();
+        }
+    }
+
+    public sendVote(option: any) {
+        var request = "input_vote ";
+        request = request.concat(option);
+        if(Socket.ready) {
+            Socket.ws.send(request);
+        }
+    }
+
+    public checkVote() {
+        if(Socket.voteStarted) {
+            Socket.pr.renderVotingRoom()
+        }
     }
 
     public getRoomID(): string {
