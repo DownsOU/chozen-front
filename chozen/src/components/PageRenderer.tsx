@@ -4,9 +4,7 @@ import JoinRoom from "../pages/JoinRoom";
 import AddOptions from "../pages/AddOptions";
 import AddOptionsHost from "../pages/AddOptionsHost"
 import VotingRoom from "../pages/VotingRoom";
-import OptionToggle from "./OptionToggle";
 import ResultsPage from "../pages/ResultsPage";
-import Socket from "./Socket";
 import {IonButton, IonSlide} from "@ionic/react";
 
 class PageRenderer {

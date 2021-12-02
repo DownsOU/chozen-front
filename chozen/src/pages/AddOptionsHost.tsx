@@ -20,7 +20,7 @@ const AddOptionsHost: React.FC = () => {
                     </IonItem>
                 </IonList>
                 <IonButton color="success" expand="block" onClick={() => Socket.getInstance().addOption(option)}>Submit</IonButton>
-                <IonButton color="danger" expand="block" onClick={() => Socket.getInstance().startVote()}>Ready To Vote!</IonButton>
+                <IonButton color="danger" expand="block" onClick={() => Socket.getInstance().startVote()}>Start Voting</IonButton>
             </IonContent>
         </IonPage>
     );

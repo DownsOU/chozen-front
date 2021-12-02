@@ -50,6 +50,7 @@ class Socket {
         Socket.ws.onmessage = function (evt) {
             if (evt.data === "request_join_room_success") {
                 if(!Socket.isHost) {
+                    Socket.getInstance().setRoomID(room);
                     Socket.pr.renderAddOptions();
                 }
             }

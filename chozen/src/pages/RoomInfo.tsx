@@ -15,7 +15,7 @@ const RoomInfo: React.FC = () => {
             <IonContent color="dark" fullscreen>
                 <p>Room Code: <strong>{Socket.getInstance().getRoomID()}</strong></p>
                 <IonButton color="primary" expand="block" onClick={() => Socket.getInstance().closeRoom()}>
-                    Join Room
+                    Everybody's Here!
                 </IonButton>
             </IonContent>
         </IonPage>
