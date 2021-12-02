@@ -25,7 +25,7 @@ const AddOptions: React.FC = () => {
                     </IonItem>
                 </IonList>
                 <IonButton color="success" expand="block" onClick={() => Socket.getInstance().addOption(option)}>Submit</IonButton>
-                <IonButton color="danger" expand="block" onClick={() => pr.renderVotingRoom()}>Ready To Vote!</IonButton>
+                <IonButton color="danger" expand="block" onClick={() => Socket.getInstance().userStartVote()}>Ready To Vote!</IonButton>
             </IonContent>
         </IonPage>
     );

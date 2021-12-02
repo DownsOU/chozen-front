@@ -9,7 +9,6 @@ class Socket {
     private static ready: boolean;
     private static roomID: string;
     private static options: string;
-    private static optionsArray: string[];
     private static isHost: boolean;
     private static voteStarted: boolean;
     private static pr: PageRenderer
@@ -84,11 +83,20 @@ class Socket {
         return(Socket.options);
     }
 
-    public startVote() {
+    public async startVote() {
         if(Socket.ready) {
             Socket.ws.send("start_vote");
+            await Socket.getInstance().delay(100);
+            Socket.getInstance().setOptions();
+            await Socket.getInstance().delay(100);
             Socket.pr.renderVotingRoom();
         }
+    }
+
+    public async userStartVote() {
+        Socket.getInstance().setOptions()
+        await Socket.getInstance().delay(100);
+        Socket.pr.renderVotingRoom();
     }
 
     public sendVote(option: any) {
@@ -99,17 +107,17 @@ class Socket {
         }
     }
 
-    public checkVote() {
-        if(Socket.voteStarted) {
-            Socket.pr.renderVotingRoom()
-        }
-    }
-
     public getRoomID(): string {
         return(Socket.roomID);
     }
     public setRoomID(id: string) {
         Socket.roomID = id;
+    }
+
+    private delay(milliseconds: number) {
+        return new Promise(resolve => {
+            setTimeout(resolve, milliseconds);
+        });
     }
 
 }

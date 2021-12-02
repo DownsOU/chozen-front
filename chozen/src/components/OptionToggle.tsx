@@ -1,13 +1,11 @@
-import {IonItem, IonToggle, IonLabel} from "@ionic/react";
-import React, {useState} from 'react';
+import {IonSlide, IonButton} from "@ionic/react";
 
-const OptionToggle: React.FC = (option) => {
-    const [checked, setChecked] = useState(false);
-    return(
-        <IonItem>
-            <IonLabel>{option}</IonLabel>
-            <IonToggle color="success" checked={checked} onIonChange={e => setChecked(e.detail.checked)}></IonToggle>
-        </IonItem>
+const OptionToggle: React.FC = (opt) => {
+    return (
+       <IonSlide>
+           <h1>{opt}</h1>
+           <IonButton expand="block" color="Success">Vote!</IonButton>
+       </IonSlide>
     )
 }
 export default OptionToggle;
