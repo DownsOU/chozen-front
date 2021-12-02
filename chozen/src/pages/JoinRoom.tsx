@@ -34,11 +34,7 @@ const JoinRoom: React.FC = () => {
                     </IonItem>
                 </IonList>
                 <IonButton expand="block"
-                           onClick={() => Socket.getInstance().joinRoom(roomCode)}
-                           href='addOptions'>Join Room</IonButton>
-                <IonButton color="danger" expand="block" href="home">
-                    Back
-                </IonButton>
+                           onClick={() => Socket.getInstance().joinRoom(roomCode)}>Join Room</IonButton>
             </IonContent>
         </IonPage>
     );

@@ -26,13 +26,13 @@ const AddOptions: React.FC = () => {
                 <div id="confirm">
 
                 </div>
-                <p>Room Code: <strong>{}</strong></p>
+                <p>Room Code: <strong>{Socket.getInstance().getRoomID()}</strong></p>
                 <IonList>
                     <IonItem>
                         <IonInput value={option} placeholder="Enter Vote Option" onIonChange={e => setOption(e.detail.value!)} clearInput></IonInput>
                     </IonItem>
                 </IonList>
-                <IonButton color="success" expand="block" onClick={() => Socket.getInstance().addOption(option)}href="votingroom">Submit</IonButton>
+                <IonButton color="success" expand="block" onClick={() => Socket.getInstance().addOption(option)}>Submit</IonButton>
             </IonContent>
         </IonPage>
     );

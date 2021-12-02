@@ -1,17 +1,20 @@
 import ReactDOM from "react-dom";
 import React from 'react';
+import PageRenderer from "./PageRenderer";
 
 class Socket {
     private static instance: Socket;
-    public ws: WebSocket;
+    private static ws: WebSocket;
     private static ready: boolean;
     private static roomID: string;
     private static options: string;
     private static isHost: boolean;
+    private static pr: PageRenderer
     private constructor() {
-        this.ws = new WebSocket("ws://localhost:25565");
+        Socket.ws = new WebSocket("ws://localhost:25565");
         Socket.isHost = false;
-        this.ws.onopen = function() {
+        Socket.pr = new PageRenderer();
+        Socket.ws.onopen = function() {
             Socket.ready = true;
         }
     }
@@ -24,19 +27,15 @@ class Socket {
 
     public createRoom() {
         if (Socket.ready) {
-            this.ws.send("request_create_room");
+            Socket.ws.send("request_create_room");
         }
-        this.ws.onmessage = function (evt) {
+        Socket.ws.onmessage = function (evt) {
             var received_msg = evt.data;
             var received_split = received_msg.split(" ");
             Socket.getInstance().setRoomID(received_split[1]);
             Socket.isHost = true;
             Socket.getInstance().joinRoom();
-            // @ts-ignore
-            document.getElementById("goToRoomInfo").click();
-            ReactDOM.render(
-                <p>Room Code: {Socket.getInstance().getRoomID()}</p>,
-                document.getElementById("roomShare"));
+            Socket.pr.renderRoomInfo();
         }
     }
 
@@ -44,18 +43,21 @@ class Socket {
         var request = "request_join_room ";
         request = request.concat(room)
         if (Socket.ready) {
-            this.ws.send(request);
+            Socket.ws.send(request);
         }
-        this.ws.onmessage = function (evt) {
+        Socket.ws.onmessage = function (evt) {
             if (evt.data === "request_join_room_success") {
-                return("Joined room".concat(room).concat("successfully"));
+                if(!Socket.isHost) {
+                    Socket.pr.renderAddOptions();
+                }
             }
         }
     }
 
     public closeRoom() {
         if(Socket.ready) {
-            this.ws.send("close_room");
+            Socket.ws.send("close_room");
+            Socket.pr.renderAddOptions();
         }
     }
 
@@ -63,15 +65,15 @@ class Socket {
         var request = "add_option "
         request = request.concat(option);
         if(Socket.ready) {
-            this.ws.send(request);
+            Socket.ws.send(request);
         }
     }
 
     public setOptions(){
         if(Socket.ready) {
-            this.ws.send("get_options");
+            Socket.ws.send("get_options");
         }
-        this.ws.onmessage = function (evt) {
+        Socket.ws.onmessage = function (evt) {
             Socket.options =  evt.data;
         }
     }

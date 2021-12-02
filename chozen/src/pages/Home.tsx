@@ -1,9 +1,10 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
 import './Home.css';
 import Socket from "../components/Socket";
+import PageRenderer from "../components/PageRenderer";
 
 const Home: React.FC = () => {
-    const socket = Socket.getInstance();
+    const pr = new PageRenderer();
   return (
     <IonPage>
       <IonHeader>
@@ -15,10 +16,9 @@ const Home: React.FC = () => {
           <IonButton color="secondary" expand="block" onClick={() => Socket.getInstance().createRoom()}>
               Create Room
           </IonButton>
-          <IonButton expand="block" href="joinroom">
+          <IonButton expand="block"  onClick={() => pr.renderJoinRoom()} >
               Join Room
           </IonButton>
-          <form action="roomInfo"><button id="goToRoomInfo" ></button></form>
       </IonContent>
     </IonPage>
   );
