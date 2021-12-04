@@ -1,7 +1,5 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar} from '@ionic/react';
 import './Home.css';
-import Socket from "../components/Socket";
-import PageRenderer from "../components/PageRenderer";
 
 const WaitingRoom: React.FC = () => {
     return (
@@ -11,6 +9,9 @@ const WaitingRoom: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent color="dark" fullscreen>
+                <div id="waitContent">
+
+                </div>
             </IonContent>
         </IonPage>
     );

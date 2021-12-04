@@ -12,6 +12,7 @@ import Socket from "./Socket";
 import React from "react";
 
 class PageRenderer {
+
     public renderJoinRoom() {
         ReactDOM.render(<JoinRoom />, document.getElementById("content"));
     }
@@ -45,7 +46,6 @@ class PageRenderer {
     }
 
     public renderOptions(opt: string) {
-        const pr = new PageRenderer();
         var optionsArray = opt.split(" ");
         var returnArray: JSX.Element[] = [];
         for(var i = 1; i < optionsArray.length; i++) {
@@ -69,7 +69,7 @@ class PageRenderer {
         returnArray.push(
             <IonSlide>
                 <div className="slide">
-                    <b><IonButton expand="block" color="danger" onClick={() => pr.renderWaitingRoom()}>Done Voting</IonButton></b>
+                    <b><IonButton expand="block" color="danger" onClick={() => Socket.getInstance().userDoneVoting()}>Done Voting</IonButton></b>
                 </div>
             </IonSlide>
 
@@ -80,7 +80,6 @@ class PageRenderer {
     }
 
     public renderOptionsHost(opt: string) {
-        const pr = new PageRenderer();
         var optionsArray = opt.split(" ");
         var returnArray: JSX.Element[] = [];
         for(var i = 1; i < optionsArray.length; i++) {

@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from "react-dom";
 import PageRenderer from "./PageRenderer";
-import JoinRoom from "../pages/JoinRoom";
-
+import ReactDOM from 'react-dom';
 
 class Socket {
     private static instance: Socket;
@@ -13,16 +11,15 @@ class Socket {
     private static isHost: boolean;
     private static winningOption: string;
     private static pr: PageRenderer
-    private static showResults: Worker;
     private constructor() {
         Socket.ws = new WebSocket("ws://localhost:25565");
         Socket.isHost = false;
         Socket.pr = new PageRenderer();
-        Socket.showResults = new Worker('./SkipToResults');
         Socket.ws.onopen = function() {
             Socket.ready = true;
         }
     }
+
     public static getInstance(): Socket {
         if(!Socket.instance) {
             Socket.instance = new Socket();
@@ -44,20 +41,36 @@ class Socket {
         }
     }
 
-    public joinRoom(room: string = Socket.roomID) {
+    public async joinRoom(room: string = Socket.roomID){
         var request = "request_join_room ";
         request = request.concat(room)
         if (Socket.ready) {
             Socket.ws.send(request);
         }
-        Socket.ws.onmessage = function (evt) {
-            if (evt.data === "request_join_room_success") {
-                if(!Socket.isHost) {
+        Socket.ws.onmessage = function () {
+
+        }
+        if (!Socket.isHost) {
+
+            await Socket.getInstance().waitForRoomClose(room);
+            Socket.pr.renderAddOptions();
+        }
+
+    }
+
+    public waitForRoomClose(room: string){
+        return new Promise<void>((resolve) => {
+            Socket.ws.onmessage = function(msg) {
+                if (msg.data === "request_join_room_success") {
                     Socket.getInstance().setRoomID(room);
-                    Socket.pr.renderAddOptions();
+                    Socket.pr.renderWaitingRoom();
+                    ReactDOM.render(<p>Joined Room {Socket.roomID}, Waiting for Host</p>, document.getElementById("waitContent"));
+                }
+                if(msg.data === "close_room"){
+                    resolve();
                 }
             }
-        }
+        });
     }
 
     public closeRoom() {
@@ -98,9 +111,23 @@ class Socket {
     }
 
     public async userStartVote() {
+        Socket.pr.renderWaitingRoom();
+        await Socket.getInstance().delay(10);
+        ReactDOM.render(<p>Waiting for Host to Start Vote</p>, document.getElementById("waitContent"));
+        await Socket.getInstance().waitForVote();
         Socket.getInstance().setOptions()
         await Socket.getInstance().delay(100);
         Socket.pr.renderVotingRoom();
+    }
+
+    public waitForVote() {
+        return new Promise<void>((resolve) => {
+            Socket.ws.onmessage = function(msg) {
+                if(msg.data === "start_vote"){
+                    resolve();
+                }
+            }
+        });
     }
 
     public sendYesVote(option: string) {
@@ -121,15 +148,33 @@ class Socket {
         }
     }
 
-    public async endVote() {
+    public endVote() {
         if(Socket.ready) {
             Socket.ws.send("force_end_vote");
         }
         Socket.ws.onmessage = function (evt) {
             Socket.getInstance().setWinningOption(evt.data.split(" ")[1]);
             Socket.pr.renderResultsPage();
-            Socket.showResults.postMessage("message");
         }
+    }
+
+    public async userDoneVoting() {
+        Socket.pr.renderWaitingRoom();
+        await Socket.getInstance().delay(10);
+        ReactDOM.render(<p>Waiting on Results</p>, document.getElementById("waitContent"));
+        await Socket.getInstance().waitForResults();
+        Socket.pr.renderResultsPage();
+    }
+
+    public waitForResults() {
+        return new Promise<void>((resolve) => {
+            Socket.ws.onmessage = function(msg) {
+                if(msg.data.includes("winning_option")){
+                    Socket.getInstance().setWinningOption(msg.data.split(" ")[1]);
+                    resolve();
+                }
+            }
+        });
     }
 
     public getRoomID(): string {
@@ -142,8 +187,17 @@ class Socket {
     public getWinningOption(): string {
         return(Socket.winningOption);
     }
+
     public setWinningOption(opt: string) {
         Socket.winningOption = opt;
+    }
+
+    public getSocket(): WebSocket {
+        return(Socket.ws);
+    }
+
+    public setSocket(socket: WebSocket) {
+        Socket.ws = socket;
     }
 
     private delay(milliseconds: number) {
@@ -151,7 +205,6 @@ class Socket {
             setTimeout(resolve, milliseconds);
         });
     }
-
-
 }
+
 export default Socket;

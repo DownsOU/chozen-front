@@ -1,15 +1,5 @@
 import React, {useState} from 'react';
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonButton,
-    IonInput,
-    IonItem,
-    IonList
-} from '@ionic/react';
+import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonInput, IonItem, IonList} from '@ionic/react';
 
 import './Home.css';
 import Socket from "../components/Socket";
@@ -35,6 +25,9 @@ const JoinRoom: React.FC = () => {
                 </IonList>
                 <IonButton expand="block"
                            onClick={() => Socket.getInstance().joinRoom(roomCode)}>Join Room</IonButton>
+                <div id="confirmation">
+
+                </div>
             </IonContent>
         </IonPage>
     );
