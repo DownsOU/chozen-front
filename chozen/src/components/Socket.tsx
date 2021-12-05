@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PageRenderer from "./PageRenderer";
 import ReactDOM from 'react-dom';
+import AlreadyVotedAlert from "./AlreadyVotedAlert";
 
 class Socket {
     private static instance: Socket;
@@ -10,11 +11,13 @@ class Socket {
     private static options: string;
     private static isHost: boolean;
     private static winningOption: string;
+    private static previouslyVoted: string[];
     private static pr: PageRenderer
     private constructor() {
         Socket.ws = new WebSocket("ws://localhost:25565");
         Socket.isHost = false;
         Socket.pr = new PageRenderer();
+        Socket.previouslyVoted = [];
         Socket.ws.onopen = function() {
             Socket.ready = true;
         }
@@ -51,7 +54,6 @@ class Socket {
 
         }
         if (!Socket.isHost) {
-
             await Socket.getInstance().waitForRoomClose(room);
             Socket.pr.renderAddOptions();
         }
@@ -85,6 +87,7 @@ class Socket {
         request = request.concat(option);
         if(Socket.ready) {
             Socket.ws.send(request);
+            ReactDOM.render(<p>Submitted Option: {option}</p>, document.getElementById("submissionConfirmation"))
         }
     }
 
@@ -131,20 +134,32 @@ class Socket {
     }
 
     public sendYesVote(option: string) {
-        var request = "input_vote ";
-        request = request.concat(option);
-        request = request.concat(" yes");
-        if(Socket.ready) {
-            Socket.ws.send(request);
+        if(Socket.previouslyVoted.indexOf(option) === -1){
+            Socket.previouslyVoted.push(option);
+            var request = "input_vote ";
+            request = request.concat(option);
+            request = request.concat(" yes");
+            if(Socket.ready) {
+                Socket.ws.send(request);
+            }
+        }
+        else {
+            ReactDOM.render(<AlreadyVotedAlert/>, document.getElementById("alreadyVotedWarning"));
         }
     }
 
     public sendNoVote(option: string) {
-        var request = "input_vote ";
-        request = request.concat(option);
-        request = request.concat(" no");
-        if(Socket.ready) {
-            Socket.ws.send(request);
+        if(Socket.previouslyVoted.indexOf(option) === -1) {
+            Socket.previouslyVoted.push(option);
+            var request = "input_vote ";
+            request = request.concat(option);
+            request = request.concat(" no");
+            if (Socket.ready) {
+                Socket.ws.send(request);
+            }
+        }
+        else{
+            ReactDOM.render(<AlreadyVotedAlert/>, document.getElementById("alreadyVotedWarning"));
         }
     }
 

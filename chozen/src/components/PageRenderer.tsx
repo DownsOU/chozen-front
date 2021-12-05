@@ -60,8 +60,11 @@ class PageRenderer {
                         <b><IonButton className="no" expand="block" color="danger" onClick={function(e) {
                             return function() {
                                 Socket.getInstance().sendNoVote(optionsArray[e])
-
                                 }}(i)}>No</IonButton></b>
+                    </div>
+                    <b/>
+                    <div id="alreadyVotedWarning">
+
                     </div>
                 </IonSlide>
             )
@@ -94,8 +97,11 @@ class PageRenderer {
                         <b><IonButton className="no" expand="block" color="danger" onClick={function(e) {
                             return function() {
                                 Socket.getInstance().sendNoVote(optionsArray[e])
-
                             }}(i)}>No</IonButton></b>
+                    </div>
+                    <b/>
+                    <div id="alreadyVotedWarning">
+
                     </div>
                 </IonSlide>
             )
