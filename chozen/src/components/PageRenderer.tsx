@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import Home from "../pages/Home";
 import RoomInfo from "../pages/RoomInfo";
 import JoinRoom from "../pages/JoinRoom";
 import AddOptions from "../pages/AddOptions";
@@ -12,6 +13,10 @@ import Socket from "./Socket";
 import React from "react";
 
 class PageRenderer {
+
+    public renderHome() {
+        ReactDOM.render(<Home />, document.getElementById("content"))
+    }
 
     public renderJoinRoom() {
         ReactDOM.render(<JoinRoom />, document.getElementById("content"));

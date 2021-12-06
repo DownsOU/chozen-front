@@ -13,14 +13,12 @@ class Socket {
     private static winningOption: string;
     private static previouslyVoted: string[];
     private static pr: PageRenderer
+
     private constructor() {
         Socket.ws = new WebSocket("ws://localhost:25565");
         Socket.isHost = false;
         Socket.pr = new PageRenderer();
         Socket.previouslyVoted = [];
-        Socket.ws.onopen = function() {
-            Socket.ready = true;
-        }
     }
 
     public static getInstance(): Socket {
@@ -28,6 +26,22 @@ class Socket {
             Socket.instance = new Socket();
         }
         return Socket.instance;
+    }
+
+    public async openSocket() {
+        await Socket.getInstance().delay(10)
+        ReactDOM.render(<p>Connecting to server...</p>, document.getElementById("waitContent"));
+        await Socket.getInstance().waitForOpen();
+        Socket.pr.renderHome();
+    }
+
+    public waitForOpen() {
+        return new Promise<void>((resolve) => {
+            Socket.ws.onopen = function(msg) {
+                Socket.ready = true;
+                resolve();
+            }
+        });
     }
 
     public createRoom() {
