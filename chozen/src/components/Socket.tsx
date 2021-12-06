@@ -15,7 +15,7 @@ class Socket {
     private static pr: PageRenderer
 
     private constructor() {
-        Socket.ws = new WebSocket("ws://localhost:25565");
+        Socket.ws = new WebSocket("ws://98.250.190.239:25568");
         Socket.isHost = false;
         Socket.pr = new PageRenderer();
         Socket.previouslyVoted = [];
@@ -29,7 +29,7 @@ class Socket {
     }
 
     public async openSocket() {
-        await Socket.getInstance().delay(10)
+        await Socket.getInstance().delay(100)
         ReactDOM.render(<p>Connecting to server...</p>, document.getElementById("waitContent"));
         await Socket.getInstance().waitForOpen();
         Socket.pr.renderHome();
